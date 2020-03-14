@@ -1,32 +1,53 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
-  Platform,
   SafeAreaView,
-  ScrollView,
   FlatList,
   KeyboardAvoidingView,
+  ActivityIndicator,
 } from 'react-native';
 import {v4 as uuidv4} from 'uuid';
 import ListItem, {Separator} from '../components/ListItem';
+import AsyncStorage from '@react-native-community/async-storage';
 import AddItem from '../components/AddItem';
 
-import nachos from '../assets/data/nachos';
+const updateStoredCurrentList = list => {
+  AsyncStorage.setItem('GroceryList/currentList', JSON.stringify(list));
+};
 
 export default () => {
-  const [list, setList] = useState(nachos);
-  console.log('list rendering');
+  const [list, setList] = useState([]);
+  const [isLoading, setIsLoading] = useState([]);
 
   const addItem = ({nativeEvent: {text}}) => {
-    setList([{id: uuidv4(), name: text}, ...list]);
+    const newList = [{id: uuidv4(), name: text}, ...list];
+    setList(newList);
+    updateStoredCurrentList(newList);
   };
 
   const removeItem = id => {
-    console.log(list);
     const newList = list.filter(item => item.id !== id);
     setList(newList);
-    console.log(newList);
+    updateStoredCurrentList(newList);
   };
 
+  useEffect(() => {
+    AsyncStorage.getItem('GroceryList/currentList')
+      .then(data => JSON.parse(data))
+      .then(data => {
+        if (data) {
+          setList(data);
+        }
+        setIsLoading(false);
+      });
+  }, []);
+
+  if (isLoading) {
+    return (
+      <SafeAreaView>
+        <ActivityIndicator size="large" />
+      </SafeAreaView>
+    );
+  }
   return (
     <SafeAreaView style={{flex: 1}}>
       <KeyboardAvoidingView style={{flex: 1}} behavior="padding">
@@ -48,21 +69,4 @@ export default () => {
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
-  // return (
-  //   <SafeAreaView>
-  //     <ScrollView>
-  //       {nachos.map((ingredient, i) => (
-  //         <React.Fragment key={ingredient.id}>
-  //           <Separator />
-  //           <ListItem
-  //             name={ingredient.name}
-  //             onStarPress={() => alert(`todo: favourite ${ingredient.name}`)}
-  //             isStarred={i < 2}
-  //           />
-  //           {i === nachos.length - 1 && <Separator />}
-  //         </React.Fragment>
-  //       ))}
-  //     </ScrollView>
-  //   </SafeAreaView>
-  // );
 };
