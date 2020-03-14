@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Animated,
   Platform,
   View,
   Text,
@@ -7,6 +8,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 const styles = StyleSheet.create({
   container: {
@@ -29,24 +31,82 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.1)',
   },
+  leftAction: {
+    flex: 1,
+    backgroundColor: '#388e3c',
+    justifyContent: 'center',
+  },
+  rightAction: {
+    flex: 1,
+    backgroundColor: '#dd2c00',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+  },
+  actionText: {
+    color: '#fff',
+    fontWeight: '600',
+    padding: 20,
+  },
 });
 
 export const Separator = () => <View style={styles.separator} />;
 
-const ListItem = ({name, onStarPress, isStarred}) => {
+const LeftActions = (progress, dragX) => {
+  const opacity = dragX.interpolate({
+    inputRange: [0, 50, 100],
+    outputRange: [0, 0.2, 1],
+    extrapolate: 'clamp',
+  });
+  return (
+    <View style={styles.leftAction}>
+      <Animated.Text style={[styles.actionText, {opacity}]}>
+        Add to cart
+      </Animated.Text>
+    </View>
+  );
+};
+
+const RightActions = (progress, dragX) => {
+  const opacity = dragX.interpolate({
+    inputRange: [-100, -50, 0],
+    outputRange: [1, 0.2, 0],
+    extrapolate: 'clamp',
+  });
+  return (
+    <View style={styles.rightAction}>
+      <Animated.Text style={[styles.actionText, {opacity}]}>
+        Delete
+      </Animated.Text>
+    </View>
+  );
+};
+
+const ListItem = ({
+  name,
+  onStarPress,
+  isStarred,
+  onAddedSwipe,
+  onDeleteSwipe,
+}) => {
   console.log('render list item');
   const starIcon = isStarred
     ? require('../assets/icons/star-filled.png')
     : require('../assets/icons/star-outline.png');
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>{name}</Text>
-      {onStarPress && (
-        <TouchableOpacity onPress={onStarPress}>
-          <Image source={starIcon} style={styles.icon} resizeMode="contain" />
-        </TouchableOpacity>
-      )}
-    </View>
+    <Swipeable
+      renderLeftActions={onAddedSwipe && LeftActions}
+      renderRightActions={onDeleteSwipe && RightActions}
+      onSwipeableLeftOpen={onAddedSwipe}
+      onSwipeableRightOpen={onDeleteSwipe}>
+      <View style={styles.container}>
+        <Text style={styles.text}>{name}</Text>
+        {onStarPress && (
+          <TouchableOpacity onPress={onStarPress}>
+            <Image source={starIcon} style={styles.icon} resizeMode="contain" />
+          </TouchableOpacity>
+        )}
+      </View>
+    </Swipeable>
   );
 };
 

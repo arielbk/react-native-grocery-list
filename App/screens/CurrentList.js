@@ -16,14 +16,21 @@ export default () => {
   const [list, setList] = useState(nachos);
   console.log('list rendering');
 
+  const addItem = ({nativeEvent: {text}}) => {
+    setList([{id: uuidv4(), name: text}, ...list]);
+  };
+
+  const removeItem = id => {
+    console.log(list);
+    const newList = list.filter(item => item.id !== id);
+    setList(newList);
+    console.log(newList);
+  };
+
   return (
     <SafeAreaView style={{flex: 1}}>
       <KeyboardAvoidingView style={{flex: 1}} behavior="padding">
-        <AddItem
-          onSubmitEditing={({nativeEvent: {text}}) => {
-            setList([{id: uuidv4(), name: text}, ...list]);
-          }}
-        />
+        <AddItem onSubmitEditing={addItem} />
         <FlatList
           data={list}
           renderItem={({item, index}) => (
@@ -31,6 +38,8 @@ export default () => {
               name={item.name}
               onStarPress={() => alert(`todo: favourite ${item.name}`)}
               isStarred={index < 2}
+              onAddedSwipe={() => removeItem(item.id)}
+              onDeleteSwipe={() => removeItem(item.id)}
             />
           )}
           keyExtractor={item => item.id}
