@@ -1,5 +1,12 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {
+  Platform,
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -20,24 +27,23 @@ const styles = StyleSheet.create({
   separator: {
     flex: 1,
     height: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
   },
 });
 
 export const Separator = () => <View style={styles.separator} />;
 
-const ListItem = ({name, onStarPress}) => {
+const ListItem = ({name, onStarPress, isStarred}) => {
   console.log('render list item');
+  const starIcon = isStarred
+    ? require('../assets/icons/star-filled.png')
+    : require('../assets/icons/star-outline.png');
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{name}</Text>
       {onStarPress && (
         <TouchableOpacity onPress={onStarPress}>
-          <Image
-            source={require('../assets/icons/star.png')}
-            style={styles.icon}
-            resizeMode="contain"
-          />
+          <Image source={starIcon} style={styles.icon} resizeMode="contain" />
         </TouchableOpacity>
       )}
     </View>
