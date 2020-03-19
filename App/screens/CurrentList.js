@@ -9,8 +9,12 @@ import ListItem, {Separator} from '../components/ListItem';
 import AddItem from '../components/AddItem';
 import {useCurrentList} from '../utils/ListManager';
 
-export default () => {
+export default ({navigation}) => {
   const {list, isLoading, addItem, removeItem} = useCurrentList();
+
+  const handleRowPress = item => () => {
+    navigation.navigate('details', {item});
+  };
 
   if (isLoading) {
     return (
@@ -27,6 +31,7 @@ export default () => {
           data={list}
           renderItem={({item, index}) => (
             <ListItem
+              onRowPress={handleRowPress(item)}
               name={item.name}
               onStarPress={() => alert(`todo: favourite ${item.name}`)}
               isStarred={index < 2}

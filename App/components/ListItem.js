@@ -87,8 +87,8 @@ const ListItem = ({
   isStarred,
   onAddedSwipe,
   onDeleteSwipe,
+  onRowPress,
 }) => {
-  console.log('render list item');
   const starIcon = isStarred
     ? require('../assets/icons/star-filled.png')
     : require('../assets/icons/star-outline.png');
@@ -98,14 +98,20 @@ const ListItem = ({
       renderRightActions={onDeleteSwipe && RightActions}
       onSwipeableLeftOpen={onAddedSwipe}
       onSwipeableRightOpen={onDeleteSwipe}>
-      <View style={styles.container}>
-        <Text style={styles.text}>{name}</Text>
-        {onStarPress && (
-          <TouchableOpacity onPress={onStarPress}>
-            <Image source={starIcon} style={styles.icon} resizeMode="contain" />
-          </TouchableOpacity>
-        )}
-      </View>
+      <TouchableOpacity onPress={() => onRowPress(name)}>
+        <View style={styles.container}>
+          <Text style={styles.text}>{name}</Text>
+          {onStarPress && (
+            <TouchableOpacity onPress={onStarPress}>
+              <Image
+                source={starIcon}
+                style={styles.icon}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+          )}
+        </View>
+      </TouchableOpacity>
     </Swipeable>
   );
 };

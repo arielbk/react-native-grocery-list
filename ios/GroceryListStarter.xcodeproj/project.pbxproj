@@ -53,6 +53,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = GroceryListStarter/main.m; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* GroceryListStarter-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GroceryListStarter-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* GroceryListStarter-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "GroceryListStarter-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3F337AF0241EA15300DB9BE4 /* GroceryListStarter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = GroceryListStarter.entitlements; path = GroceryListStarter/GroceryListStarter.entitlements; sourceTree = "<group>"; };
 		43D06687C47791A19FE615DF /* Pods-GroceryListStarter-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GroceryListStarter-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-GroceryListStarter-tvOSTests/Pods-GroceryListStarter-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		44AE4415286F31DB943F447C /* Pods-GroceryListStarter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GroceryListStarter.release.xcconfig"; path = "Target Support Files/Pods-GroceryListStarter/Pods-GroceryListStarter.release.xcconfig"; sourceTree = "<group>"; };
 		5F0EC23E0C92A5AE85532193 /* libPods-GroceryListStarter-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GroceryListStarter-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -125,6 +126,7 @@
 		13B07FAE1A68108700A75B9A /* GroceryListStarter */ = {
 			isa = PBXGroup;
 			children = (
+				3F337AF0241EA15300DB9BE4 /* GroceryListStarter.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -194,7 +196,6 @@
 				A7FA002A8ED02C2EF2A6B790 /* Pods-GroceryListStarterTests.debug.xcconfig */,
 				BD39C033FF4211F6F16E3B99 /* Pods-GroceryListStarterTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -292,8 +293,12 @@
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = X758DX2S98;
+					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = X758DX2S98;
 						ProvisioningStyle = Automatic;
 					};
 					2D02E48F1E0B4A5D006451C7 = {
@@ -308,6 +313,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -626,8 +632,10 @@
 			baseConfigurationReference = 8F71F7F7F9B1E2E41FDF854B /* Pods-GroceryListStarter.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = GroceryListStarter/GroceryListStarter.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = X758DX2S98;
 				INFOPLIST_FILE = GroceryListStarter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -646,7 +654,9 @@
 			baseConfigurationReference = 44AE4415286F31DB943F447C /* Pods-GroceryListStarter.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = GroceryListStarter/GroceryListStarter.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = X758DX2S98;
 				INFOPLIST_FILE = GroceryListStarter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -671,6 +681,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = X758DX2S98;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "GroceryListStarter-tvOS/Info.plist";
@@ -700,6 +711,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = X758DX2S98;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "GroceryListStarter-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
