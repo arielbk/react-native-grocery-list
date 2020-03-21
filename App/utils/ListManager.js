@@ -5,10 +5,14 @@ import {v4 as uuidv4} from 'uuid';
 const updateStoredCurrentList = list => {
   AsyncStorage.setItem('GroceryList/currentList', JSON.stringify(list));
 };
+const updateStoredCartList = list => {
+  AsyncStorage.setItem('GroceryList/currentCart', JSON.stringify(list));
+};
 
 export const useCurrentList = () => {
   const [list, setList] = useState([]);
   const [isLoading, setIsLoading] = useState([]);
+  const [cart, setCart] = useState([]);
 
   const addItem = ({nativeEvent: {text}}) => {
     const newList = [{id: uuidv4(), name: text}, ...list];
@@ -22,12 +26,28 @@ export const useCurrentList = () => {
     updateStoredCurrentList(newList);
   };
 
+  const addToCart = item => {
+    const newList = [item, ...cart];
+    setCart(newList);
+    updateStoredCartList(newList);
+    removeItem(item.id);
+  };
+
   useEffect(() => {
-    AsyncStorage.getItem('GroceryList/currentList')
-      .then(data => JSON.parse(data))
-      .then(data => {
-        if (data) {
-          setList(data);
+    Promise.all([
+      AsyncStorage.getItem('GroceryList/currentList'),
+      AsyncStorage.getItem('GroceryList/currentCart'),
+    ])
+      .then(([listItems, cartItems]) => [
+        JSON.parse(listItems),
+        JSON.parse(cartItems),
+      ])
+      .then(([listItems, cartItems]) => {
+        if (listItems) {
+          setList(listItems);
+        }
+        if (cartItems) {
+          setCart(cartItems);
         }
         setIsLoading(false);
       });
@@ -38,5 +58,7 @@ export const useCurrentList = () => {
     isLoading,
     addItem,
     removeItem,
+    addToCart,
+    cart,
   };
 };

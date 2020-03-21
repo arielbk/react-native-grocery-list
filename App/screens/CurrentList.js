@@ -1,16 +1,25 @@
 import React from 'react';
 import {
   SafeAreaView,
-  FlatList,
+  SectionList,
   KeyboardAvoidingView,
   ActivityIndicator,
 } from 'react-native';
-import ListItem, {Separator} from '../components/ListItem';
+import ListItem, {Separator, SectionHeader} from '../components/ListItem';
 import AddItem from '../components/AddItem';
 import {useCurrentList} from '../utils/ListManager';
 
 export default ({navigation}) => {
-  const {list, isLoading, addItem, removeItem} = useCurrentList();
+  const {
+    list,
+    isLoading,
+    addItem,
+    removeItem,
+    addToCart,
+    cart,
+  } = useCurrentList();
+
+  console.log(cart);
 
   const handleRowPress = item => () => {
     navigation.navigate('details', {item});
@@ -27,15 +36,19 @@ export default ({navigation}) => {
     <SafeAreaView style={{flex: 1}}>
       <KeyboardAvoidingView style={{flex: 1}} behavior="padding">
         <AddItem onSubmitEditing={addItem} />
-        <FlatList
-          data={list}
+        <SectionList
+          // data={list}
+          sections={[{title: 'List', data: list}, {title: 'Cart', data: cart}]}
+          renderSectionHeader={({section}) => (
+            <SectionHeader title={section.title} />
+          )}
           renderItem={({item, index}) => (
             <ListItem
               onRowPress={handleRowPress(item)}
               name={item.name}
               onStarPress={() => alert(`todo: favourite ${item.name}`)}
               isStarred={index < 2}
-              onAddedSwipe={() => removeItem(item.id)}
+              onAddedSwipe={() => addToCart(item)}
               onDeleteSwipe={() => removeItem(item.id)}
             />
           )}

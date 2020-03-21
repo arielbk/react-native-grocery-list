@@ -1,5 +1,5 @@
 {
-  "name": "GroceryListStarter",
+  "name": "grocery-list-starter",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -21,6 +21,7 @@
     "react-native-reanimated": "^1.7.0",
     "react-native-safe-area-context": "^0.7.3",
     "react-native-screens": "^2.3.0",
+    "react-native-splash-screen": "^3.2.0",
     "react-native-vector-icons": "^6.6.0",
     "uuid": "^7.0.2"
   },

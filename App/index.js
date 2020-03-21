@@ -1,5 +1,9 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, {useEffect} from 'react';
 import Navigation from './navigation';
+import SplashScreen from 'react-native-splash-screen';
 
-export default () => <Navigation />;
+export default () => {
+  useEffect(() => SplashScreen.hide(), []);
+  return <Navigation />;
+};
