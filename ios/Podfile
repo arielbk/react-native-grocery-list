@@ -36,6 +36,8 @@ target 'GroceryListStarter' do
 
 
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   target 'GroceryListStarterTests' do
     inherit! :search_paths
     # Pods for testing

@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const styles = StyleSheet.create({
   container: {
@@ -89,9 +90,11 @@ const ListItem = ({
   onDeleteSwipe,
   onRowPress,
 }) => {
-  const starIcon = isStarred
-    ? require('../assets/icons/star-filled.png')
-    : require('../assets/icons/star-outline.png');
+  const starIcon = Platform.select({
+    ios: isStarred ? 'ios-star' : 'ios-star-outline',
+    android: isStarred ? 'md-star' : 'ios-star-ourline',
+  });
+
   return (
     <Swipeable
       renderLeftActions={onAddedSwipe && LeftActions}
@@ -103,10 +106,10 @@ const ListItem = ({
           <Text style={styles.text}>{name}</Text>
           {onStarPress && (
             <TouchableOpacity onPress={onStarPress}>
-              <Image
-                source={starIcon}
-                style={styles.icon}
-                resizeMode="contain"
+              <Icon
+                name={starIcon}
+                size={30}
+                color={isStarred ? '#FFCC01' : '#bbb'}
               />
             </TouchableOpacity>
           )}
